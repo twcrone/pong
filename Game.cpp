@@ -17,6 +17,7 @@ Game::Game()
 ,mTicksCount(0)
 ,mIsRunning(true)
 ,mLeftPaddleDir(0)
+,mRightPaddleDir(0)
 {
 	
 }
@@ -62,7 +63,7 @@ bool Game::Initialize()
 	//
 	mLeftPaddlePos.x = 10.0f;
 	mLeftPaddlePos.y = 768.0f/2.0f;
-    mRightPaddlePos.x = 1024.0f;
+    mRightPaddlePos.x = 1000.0f;
     mRightPaddlePos.y = 768.0f/2.0f;
 	mBallPos.x = 1024.0f/2.0f;
 	mBallPos.y = 768.0f/2.0f;
@@ -105,6 +106,7 @@ void Game::ProcessInput()
 	
 	// Update paddle direction based on W/S keys
 	mLeftPaddleDir = 0;
+    mRightPaddleDir = 0;
 	if (state[SDL_SCANCODE_W])
 	{
 		mLeftPaddleDir -= 1;
@@ -113,6 +115,14 @@ void Game::ProcessInput()
 	{
 		mLeftPaddleDir += 1;
 	}
+    if (state[SDL_SCANCODE_I])
+    {
+        mRightPaddleDir -= 1;
+    }
+    if (state[SDL_SCANCODE_K])
+    {
+        mRightPaddleDir += 1;
+    }
 }
 
 void Game::UpdateGame()
@@ -139,7 +149,11 @@ void Game::UpdateGame()
 	{
         UpdatePaddle(mLeftPaddlePos, mLeftPaddleDir, deltaTime);
 	}
-	
+    if (mRightPaddleDir != 0)
+    {
+        UpdatePaddle(mRightPaddlePos, mRightPaddleDir, deltaTime);
+    }
+
 	// Update ball position based on ball velocity
 	mBallPos.x += mBallVel.x * deltaTime;
 	mBallPos.y += mBallVel.y * deltaTime;
@@ -165,10 +179,10 @@ void Game::UpdateGame()
 		mIsRunning = false;
 	}
 	// Did the ball collide with the right wall?
-	else if (mBallPos.x >= (1024.0f - thickness) && mBallVel.x > 0.0f)
-	{
-		mBallVel.x *= -1.0f;
-	}
+//	else if (mBallPos.x >= (1024.0f - thickness) && mBallVel.x > 0.0f)
+//	{
+//		mBallVel.x *= -1.0f;
+//	}
 	
 	// Did the ball collide with the top wall?
 	if (mBallPos.y <= thickness && mBallVel.y < 0.0f)
@@ -229,21 +243,28 @@ void Game::GenerateOutput()
 	SDL_RenderFillRect(mRenderer, &wall);
 	
 	// Draw right wall
-	wall.x = 1024 - thickness;
-	wall.y = 0;
-	wall.w = thickness;
-	wall.h = 1024;
-	SDL_RenderFillRect(mRenderer, &wall);
+//	wall.x = 1024 - thickness;
+//	wall.y = 0;
+//	wall.w = thickness;
+//	wall.h = 1024;
+//	SDL_RenderFillRect(mRenderer, &wall);
 	
 	// Draw paddle
-	SDL_Rect paddle{
+	SDL_Rect leftPaddle{
 		static_cast<int>(mLeftPaddlePos.x),
 		static_cast<int>(mLeftPaddlePos.y - paddleH/2),
 		thickness,
 		static_cast<int>(paddleH)
 	};
-	SDL_RenderFillRect(mRenderer, &paddle);
-	
+	SDL_RenderFillRect(mRenderer, &leftPaddle);
+    SDL_Rect rightPaddle{
+        static_cast<int>(mRightPaddlePos.x),
+        static_cast<int>(mRightPaddlePos.y - paddleH/2),
+        thickness,
+        static_cast<int>(paddleH)
+    };
+    SDL_RenderFillRect(mRenderer, &rightPaddle);
+    
 	// Draw ball
 	SDL_Rect ball{	
 		static_cast<int>(mBallPos.x - thickness/2),

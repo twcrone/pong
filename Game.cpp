@@ -16,8 +16,6 @@ Game::Game()
 ,mRenderer(nullptr)
 ,mTicksCount(0)
 ,mIsRunning(true)
-,mLeftPaddleDir(0)
-,mRightPaddleDir(0)
 {
 	
 }
@@ -61,10 +59,10 @@ bool Game::Initialize()
 		return false;
 	}
 	//
-	mLeftPaddlePos.x = 10.0f;
-	mLeftPaddlePos.y = 768.0f/2.0f;
-    mRightPaddlePos.x = 1000.0f;
-    mRightPaddlePos.y = 768.0f/2.0f;
+	mLeftPaddle.position.x = 10.0f;
+	mLeftPaddle.position.y = 768.0f/2.0f;
+    mRightPaddle.position.x = 1000.0f;
+    mRightPaddle.position.y = 768.0f/2.0f;
     mBall.position.x = 1024.0f/2.0f;
 	mBall.position.y = 768.0f/2.0f;
 	mBall.velocity.x = -200.0f;
@@ -105,23 +103,23 @@ void Game::ProcessInput()
 	}
 	
 	// Update paddle direction based on W/S keys
-	mLeftPaddleDir = 0;
-    mRightPaddleDir = 0;
+	mLeftPaddle.direction = 0;
+    mRightPaddle.direction = 0;
 	if (state[SDL_SCANCODE_W])
 	{
-		mLeftPaddleDir -= 1;
+		mLeftPaddle.direction -= 1;
 	}
 	if (state[SDL_SCANCODE_S])
 	{
-		mLeftPaddleDir += 1;
+		mLeftPaddle.direction += 1;
 	}
     if (state[SDL_SCANCODE_I])
     {
-        mRightPaddleDir -= 1;
+        mRightPaddle.direction -= 1;
     }
     if (state[SDL_SCANCODE_K])
     {
-        mRightPaddleDir += 1;
+        mRightPaddle.direction += 1;
     }
 }
 
@@ -145,13 +143,13 @@ void Game::UpdateGame()
 	mTicksCount = SDL_GetTicks();
 	
 	// Update paddle position based on direction
-	if (mLeftPaddleDir != 0)
+	if (mLeftPaddle.direction != 0)
 	{
-        UpdatePaddle(mLeftPaddlePos, mLeftPaddleDir, deltaTime);
+        UpdatePaddle(mLeftPaddle.position, mLeftPaddle.direction, deltaTime);
 	}
-    if (mRightPaddleDir != 0)
+    if (mRightPaddle.direction != 0)
     {
-        UpdatePaddle(mRightPaddlePos, mRightPaddleDir, deltaTime);
+        UpdatePaddle(mRightPaddle.position, mRightPaddle.direction, deltaTime);
     }
 
 	// Update ball position based on ball velocity
@@ -160,10 +158,10 @@ void Game::UpdateGame()
 	
 	// Bounce if needed
 	// Did we intersect with the paddle?
-	float diff = mLeftPaddlePos.y - mBall.position.y;
+	float diff = mLeftPaddle.position.y - mBall.position.y;
 	// Take absolute value of difference
 	diff = (diff > 0.0f) ? diff : -diff;
-    float rdiff = mRightPaddlePos.y - mBall.position.y;
+    float rdiff = mRightPaddle.position.y - mBall.position.y;
     // Take absolute value of difference
     rdiff = (rdiff > 0.0f) ? rdiff : -rdiff;
 	if (
@@ -264,15 +262,15 @@ void Game::GenerateOutput()
 	
 	// Draw paddle
 	SDL_Rect leftPaddle{
-		static_cast<int>(mLeftPaddlePos.x),
-		static_cast<int>(mLeftPaddlePos.y - paddleH/2),
+		static_cast<int>(mLeftPaddle.position.x),
+		static_cast<int>(mLeftPaddle.position.y - paddleH/2),
 		thickness,
 		static_cast<int>(paddleH)
 	};
 	SDL_RenderFillRect(mRenderer, &leftPaddle);
     SDL_Rect rightPaddle{
-        static_cast<int>(mRightPaddlePos.x),
-        static_cast<int>(mRightPaddlePos.y - paddleH/2),
+        static_cast<int>(mRightPaddle.position.x),
+        static_cast<int>(mRightPaddle.position.y - paddleH/2),
         thickness,
         static_cast<int>(paddleH)
     };

@@ -23,6 +23,12 @@ struct Ball
     Vector2 velocity;
 };
 
+struct Paddle
+{
+    int direction;
+    Vector2 position;
+};
+
 // Game class
 class Game
 {
@@ -53,16 +59,10 @@ private:
 	// Pong specific
     
     // Left Paddle
-	// Direction of paddle
-	int mLeftPaddleDir;
-	// Position of paddle
-	Vector2 mLeftPaddlePos;
+    Paddle mLeftPaddle;
     
     // Right Paddle
-    // Direction of paddle
-    int mRightPaddleDir;
-    // Position of paddle
-    Vector2 mRightPaddlePos;
+    Paddle mRightPaddle;
 
     // the ball
     Ball mBall;

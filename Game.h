@@ -17,6 +17,12 @@ struct Vector2
 	float y;
 };
 
+struct Ball
+{
+    Vector2 position;
+    Vector2 velocity;
+};
+
 // Game class
 class Game
 {
@@ -58,8 +64,6 @@ private:
     // Position of paddle
     Vector2 mRightPaddlePos;
 
-    // Position of ball
-	Vector2 mBallPos;
-	// Velocity of ball
-	Vector2 mBallVel;
+    // the ball
+    Ball mBall;
 };

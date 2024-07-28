@@ -167,19 +167,10 @@ void Game::UpdateGame()
 	
 	// Bounce if needed
 	// Did we intersect with the paddle?
-	float diff = mLeftPaddle.position.y - mBall1.position.y;
-	// Take absolute value of difference
-	diff = (diff > 0.0f) ? diff : -diff;
     float rdiff = mRightPaddle.position.y - mBall1.position.y;
     // Take absolute value of difference
     rdiff = (rdiff > 0.0f) ? rdiff : -rdiff;
-	if (
-		// Our y-difference is small enough
-		diff <= paddleH / 2.0f &&
-		// We are in the correct x-position
-		mBall1.position.x <= 25.0f && mBall1.position.x >= 20.0f &&
-		// The ball is moving to the left
-		mBall1.velocity.x < 0.0f)
+	if (HasCollision(mBall1, mLeftPaddle))
 	{
 		mBall1.velocity.x *= -1.0f;
 	}
@@ -215,6 +206,20 @@ void Game::UpdateGame()
 	{
 		mBall1.velocity.y *= -1;
 	}
+}
+
+bool Game::HasCollision(Ball ball, Paddle paddle) {
+    float diff = mLeftPaddle.position.y - mBall1.position.y;
+    // Take absolute value of difference
+    diff = (diff > 0.0f) ? diff : -diff;
+    return (
+        // Our y-difference is small enough
+        diff <= paddleH / 2.0f &&
+        // We are in the correct x-position
+        ball.position.x <= 25.0f && ball.position.x >= 20.0f &&
+        // The ball is moving to the left
+            ball.velocity.x < 0.0f);
+
 }
 
 void Game::UpdatePaddle(Vector2 &paddlePos, int paddleDir, float deltaTime)

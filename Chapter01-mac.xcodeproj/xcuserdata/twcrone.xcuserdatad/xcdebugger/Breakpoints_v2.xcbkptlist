@@ -14,9 +14,9 @@
             filePath = "Game.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
-            landmarkName = "Game::Initialize()"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
+            landmarkName = "Game::GenerateOutput()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

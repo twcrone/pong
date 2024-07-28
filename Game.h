@@ -47,6 +47,7 @@ private:
 	void GenerateOutput();
     void UpdatePaddle(Vector2 &paddlePos, int paddleDir, float deltaTime);
     Ball InitializeBall(float posX, float posY, float velX, float velY);
+    bool HasCollision(Ball ball, Paddle paddle);
 
 	// Window created by SDL
 	SDL_Window* mWindow;

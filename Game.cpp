@@ -165,23 +165,34 @@ void Game::UpdateGame()
     }
 
 	// Update ball position based on ball velocity
-//	mBall1.position.x += mBall1.velocity.x * deltaTime;
-//	mBall1.position.y += mBall1.velocity.y * deltaTime;
     UpdateBall(mBall1, deltaTime);
     UpdateBall(mBall2, deltaTime);
 	
-	// Bounce if needed
-	// Did we intersect with the paddle?
 	// Did the ball go off the screen? (if so, end game)
-	if (mBall1.position.x <= 0.0f || mBall1.position.x >= 1024)
+	if (!mBall1.onScreen && !mBall2.onScreen)
 	{
 		mIsRunning = false;
 	}
 }
 
+
+
 void Game::UpdateBall(Ball &ball, float deltaTime) {
+    if(ball.onScreen == false)
+    {
+        return;
+    }
+    
     ball.position.x += ball.velocity.x * deltaTime;
     ball.position.y += ball.velocity.y * deltaTime;
+
+    // Did the ball go off the screen
+    if (ball.position.x <= 0.0f || ball.position.x >= 1024)
+    {
+        ball.onScreen = false;
+        return;
+    }
+
     if (HasCollision(ball, mLeftPaddle) || HasCollision(ball, mRightPaddle))
     {
         ball.velocity.x *= -1.0f;
@@ -286,21 +297,25 @@ void Game::GenerateOutput()
     SDL_RenderFillRect(mRenderer, &rightPaddle);
     
 	// Draw balls
-	SDL_Rect ball1{
-		static_cast<int>(mBall1.position.x - thickness/2),
-		static_cast<int>(mBall1.position.y - thickness/2),
-		thickness,
-		thickness
-	};
-	SDL_RenderFillRect(mRenderer, &ball1);
+    if(mBall1.onScreen) {
+        SDL_Rect ball1{
+            static_cast<int>(mBall1.position.x - thickness/2),
+            static_cast<int>(mBall1.position.y - thickness/2),
+            thickness,
+            thickness
+        };
+        SDL_RenderFillRect(mRenderer, &ball1);
+    }
 
-    SDL_Rect ball2{
-        static_cast<int>(mBall2.position.x - thickness/2),
-        static_cast<int>(mBall2.position.y - thickness/2),
-        thickness,
-        thickness
-    };
-    SDL_RenderFillRect(mRenderer, &ball2);
+    if(mBall2.onScreen) {
+        SDL_Rect ball2{
+            static_cast<int>(mBall2.position.x - thickness/2),
+            static_cast<int>(mBall2.position.y - thickness/2),
+            thickness,
+            thickness
+        };
+        SDL_RenderFillRect(mRenderer, &ball2);
+    }
 
 	// Swap front buffer and back buffer
 	SDL_RenderPresent(mRenderer);

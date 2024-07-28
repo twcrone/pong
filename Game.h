@@ -21,6 +21,7 @@ struct Ball
 {
     Vector2 position;
     Vector2 velocity;
+    bool onScreen = true;
 };
 
 struct Paddle

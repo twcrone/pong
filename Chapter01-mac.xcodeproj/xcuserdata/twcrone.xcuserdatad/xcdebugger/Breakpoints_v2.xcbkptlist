@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "239"
             endingLineNumber = "239"
-            landmarkName = "Game::UpdatePaddle(paddlePos, paddleDir, deltaTime)"
+            landmarkName = "Game::GenerateOutput()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -32,7 +32,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "205"
             endingLineNumber = "205"
-            landmarkName = "Game::UpdateGame()"
+            landmarkName = "Game::HasCollision(ball, paddle)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

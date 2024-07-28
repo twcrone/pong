@@ -174,7 +174,7 @@ void Game::UpdateGame()
 		mBallVel.x *= -1.0f;
 	}
 	// Did the ball go off the screen? (if so, end game)
-	else if (mBallPos.x <= 0.0f)
+	else if (mBallPos.x <= 0.0f || mBallPos.x >= 1024)
 	{
 		mIsRunning = false;
 	}

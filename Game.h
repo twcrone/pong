@@ -46,6 +46,7 @@ private:
 	void UpdateGame();
 	void GenerateOutput();
     void UpdatePaddle(Vector2 &paddlePos, int paddleDir, float deltaTime);
+    Ball InitializeBall(float posX, float posY, float velX, float velY);
 
 	// Window created by SDL
 	SDL_Window* mWindow;
@@ -65,5 +66,6 @@ private:
     Paddle mRightPaddle;
 
     // the ball
-    Ball mBall;
+    Ball mBall1;
+    Ball mBall2;
 };

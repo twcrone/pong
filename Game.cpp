@@ -63,8 +63,10 @@ bool Game::Initialize()
     srand(time(NULL));
 	mLeftPaddle.position.x = 10.0f;
 	mLeftPaddle.position.y = 768.0f/2.0f;
+    mLeftPaddle.left = true;
     mRightPaddle.position.x = 1000.0f;
     mRightPaddle.position.y = 768.0f/2.0f;
+    mRightPaddle.left = false;
     mBall1 = InitializeBall(1024.0f/2.0f, rand() % 768, -200.0f, rand() % 235 + 100);
 	return true;
 }
@@ -170,20 +172,10 @@ void Game::UpdateGame()
     float rdiff = mRightPaddle.position.y - mBall1.position.y;
     // Take absolute value of difference
     rdiff = (rdiff > 0.0f) ? rdiff : -rdiff;
-	if (HasCollision(mBall1, mLeftPaddle))
+	if (HasCollision(mBall1, mLeftPaddle) || HasCollision(mBall1, mRightPaddle))
 	{
 		mBall1.velocity.x *= -1.0f;
 	}
-    if (
-        // Our y-difference is small enough
-        rdiff <= paddleH / 2.0f &&
-        // We are in the correct x-position
-        mBall1.position.x >= 1000.0f && mBall1.position.x <= 1024.0f &&
-        // The ball is moving to the left
-        mBall1.velocity.x > 0.0f)
-    {
-        mBall1.velocity.x *= -1.0f;
-    }
 	// Did the ball go off the screen? (if so, end game)
 	else if (mBall1.position.x <= 0.0f || mBall1.position.x >= 1024)
 	{
@@ -209,16 +201,19 @@ void Game::UpdateGame()
 }
 
 bool Game::HasCollision(Ball ball, Paddle paddle) {
-    float diff = mLeftPaddle.position.y - mBall1.position.y;
+    float diff = paddle.position.y - ball.position.y;
     // Take absolute value of difference
     diff = (diff > 0.0f) ? diff : -diff;
+    float max = paddle.left ? 25.0f : 1024.0f;
+    float min = paddle.left ? 20.0f : 1000.0f;
+    bool ballMovingLeft = ball.velocity.x < 0.0f;
     return (
         // Our y-difference is small enough
         diff <= paddleH / 2.0f &&
         // We are in the correct x-position
-        ball.position.x <= 25.0f && ball.position.x >= 20.0f &&
+        ball.position.x <= max && ball.position.x >= min &&
         // The ball is moving to the left
-            ball.velocity.x < 0.0f);
+            ballMovingLeft == paddle.left);
 
 }
 

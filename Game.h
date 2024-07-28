@@ -27,6 +27,7 @@ struct Paddle
 {
     int direction;
     Vector2 position;
+    bool left;
 };
 
 // Game class

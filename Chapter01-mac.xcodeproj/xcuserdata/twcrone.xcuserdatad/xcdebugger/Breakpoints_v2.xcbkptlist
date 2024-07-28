@@ -14,9 +14,25 @@
             filePath = "Game.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "Game::GenerateOutput()"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "Game::UpdatePaddle(paddlePos, paddleDir, deltaTime)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DEA699CA-DF0C-4AEA-9EB6-17C81BBAC970"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Game.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
+            landmarkName = "Game::UpdateGame()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

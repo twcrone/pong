@@ -7,6 +7,7 @@
 // ----------------------------------------------------------------
 
 #include "Game.h"
+#include <time.h>
 
 const int thickness = 15;
 const float paddleH = 100.0f;
@@ -59,14 +60,15 @@ bool Game::Initialize()
 		return false;
 	}
 	//
+    srand(time(NULL));
 	mLeftPaddle.position.x = 10.0f;
 	mLeftPaddle.position.y = 768.0f/2.0f;
     mRightPaddle.position.x = 1000.0f;
     mRightPaddle.position.y = 768.0f/2.0f;
     mBall.position.x = 1024.0f/2.0f;
-	mBall.position.y = 768.0f/2.0f;
-	mBall.velocity.x = -200.0f;
-	mBall.velocity.y = 235.0f;
+    mBall.position.y = rand() % 768; //768.0f/2.0f;
+    mBall.velocity.x = -200.0f;
+	mBall.velocity.y = rand() % 235 + 100;
 	return true;
 }
 

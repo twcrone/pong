@@ -33,7 +33,7 @@ bool Game::Initialize()
 	
 	// Create an SDL Window
 	mWindow = SDL_CreateWindow(
-		"Game Programming in C++ (Chapter 1)", // Window title
+		"Pong 2", // Window title
 		100,	// Top left x-coordinate of window
 		100,	// Top left y-coordinate of window
 		1024,	// Width of window
@@ -62,6 +62,8 @@ bool Game::Initialize()
 	//
 	mLeftPaddlePos.x = 10.0f;
 	mLeftPaddlePos.y = 768.0f/2.0f;
+    mRightPaddlePos.x = 1024.0f;
+    mRightPaddlePos.y = 768.0f/2.0f;
 	mBallPos.x = 1024.0f/2.0f;
 	mBallPos.y = 768.0f/2.0f;
 	mBallVel.x = -200.0f;
@@ -135,16 +137,7 @@ void Game::UpdateGame()
 	// Update paddle position based on direction
 	if (mLeftPaddleDir != 0)
 	{
-		mLeftPaddlePos.y += mLeftPaddleDir * 300.0f * deltaTime;
-		// Make sure paddle doesn't move off screen!
-		if (mLeftPaddlePos.y < (paddleH/2.0f + thickness))
-		{
-			mLeftPaddlePos.y = paddleH/2.0f + thickness;
-		}
-		else if (mLeftPaddlePos.y > (768.0f - paddleH/2.0f - thickness))
-		{
-			mLeftPaddlePos.y = 768.0f - paddleH/2.0f - thickness;
-		}
+        UpdatePaddle(mLeftPaddlePos, mLeftPaddleDir, deltaTime);
 	}
 	
 	// Update ball position based on ball velocity
@@ -188,6 +181,21 @@ void Game::UpdateGame()
 	{
 		mBallVel.y *= -1;
 	}
+}
+
+void Game::UpdatePaddle(Vector2 &paddlePos, int paddleDir, float deltaTime)
+{
+    SDL_Log("Bob");
+    paddlePos.y += paddleDir * 300.0f * deltaTime;
+    // Make sure paddle doesn't move off screen!
+    if (paddlePos.y < (paddleH/2.0f + thickness))
+    {
+        paddlePos.y = paddleH/2.0f + thickness;
+    }
+    else if (paddlePos.y > (768.0f - paddleH/2.0f - thickness))
+    {
+        paddlePos.y = 768.0f - paddleH/2.0f - thickness;
+    }
 }
 
 void Game::GenerateOutput()

@@ -33,6 +33,7 @@ private:
 	void ProcessInput();
 	void UpdateGame();
 	void GenerateOutput();
+    void UpdatePaddle(Vector2 &paddlePos, int paddleDir, float deltaTime);
 
 	// Window created by SDL
 	SDL_Window* mWindow;

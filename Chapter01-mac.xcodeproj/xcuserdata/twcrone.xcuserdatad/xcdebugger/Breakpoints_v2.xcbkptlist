@@ -14,9 +14,9 @@
             filePath = "Game.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "Game::UpdatePaddle(paddlePos, paddleDir, deltaTime)"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "Game::GenerateOutput()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

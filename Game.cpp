@@ -230,7 +230,6 @@ bool Game::HasCollision(Ball ball, Paddle paddle) {
 
 void Game::UpdatePaddle(Vector2 &paddlePos, int paddleDir, float deltaTime)
 {
-    SDL_Log("Bob");
     paddlePos.y += paddleDir * 300.0f * deltaTime;
     // Make sure paddle doesn't move off screen!
     if (paddlePos.y < (paddleH/2.0f + thickness))
